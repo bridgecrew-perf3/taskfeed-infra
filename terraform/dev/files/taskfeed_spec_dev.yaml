@@ -1,0 +1,133 @@
+openapi: "3.0.2"
+info:
+  title: TaskFeed
+  description: |
+    REST API that will service requests from the TaskFeed application.
+  version: "0.0.1"
+
+paths:
+  /tasks:
+    get:
+      summary: Get all tasks
+      description: |
+        Retrieves all tasks stored in the backend. This operation will be costly 
+        and therefore limited to developer/admin access only.
+      x-amazon-apigateway-integration:
+        httpMethod: "GET"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK
+
+    post:
+      summary: Save task
+      description: Stores tasks to the backend.
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK
+
+  /tasks/{owner}:
+    get:
+      summary: Get tasks by owner
+      description: Retrieves all tasks asscosiated to a particular owner.
+      x-amazon-apigateway-integration:
+        httpMethod: "GET"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK
+
+  /tasks/{owner}/{id}:
+    get:
+      summary: Get an owner's task by id
+      description: Retrieves a single task related to an owner with a given id.
+      x-amazon-apigateway-integration:
+        httpMethod: "GET"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK
+
+    put:
+      summary: Updates a task
+      description: Overrides the data of a single existing task entry.
+      x-amazon-apigateway-integration:
+        httpMethod: "PUT"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK
+
+    delete:
+      summary: Deletes a task
+      description: Deletes an existing task.
+      x-amazon-apigateway-integration:
+        httpMethod: "DELETE"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK
+
+  /{username}:
+    get:
+      summary: Get user info
+      description: Retrieves the info of a single user.
+      x-amazon-apigateway-integration:
+        httpMethod: "GET"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK
+
+    post:
+      summary: Adds a user
+      description: Stores user info to the backend.
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK
+
+    put:
+      summary: Updates user info
+      description: Overrides the data of a single existing user entry.
+      x-amazon-apigateway-integration:
+        httpMethod: "PUT"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK
+
+    delete:
+      summary: Deletes a user
+      description: Deletes an existing user along with all their info.
+      x-amazon-apigateway-integration:
+        httpMethod: "DELETE"
+        type: "MOCK"
+      x-amazon-apigateway-auth:
+        type: "NONE"
+      responses:
+        "200":
+          description: OK

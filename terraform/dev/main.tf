@@ -21,3 +21,14 @@ terraform {
     encrypt = true
   }
 }
+
+module "api_gateway" {
+  source = "../modules/api_gateway"
+
+  api_name                 = "taskfeed-rest-api"
+  api_description          = "REST API for TaskFeed app."
+  api_key_source           = "HEADER"
+  api_openapi_spec         = "./files/taskfeed_spec_dev.yaml"
+  api_endpoint_config_type = "REGIONAL"
+  api_stage                = "DEV"
+}
