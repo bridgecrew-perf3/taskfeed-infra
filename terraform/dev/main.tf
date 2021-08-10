@@ -32,3 +32,48 @@ module "api_gateway" {
   api_endpoint_config_type = "REGIONAL"
   stage                    = "DEV"
 }
+
+module "dynamodb_table_tasks" {
+  source = "terraform-aws-modules/dynamodb-table/aws"
+
+  name         = "tasks"
+  billing_mode = "PROVISIONED"
+
+  read_capacity  = 5
+  write_capacity = 5
+
+  hash_key  = "id"
+  range_key = "owner"
+
+  attributes = [
+    {
+      name = "id"
+      type = "S"
+    },
+    {
+      name = "owner"
+      type = "S"
+    }
+  ]
+
+}
+
+module "dynamodb_table_users" {
+  source = "terraform-aws-modules/dynamodb-table/aws"
+
+  name         = "users"
+  billing_mode = "PROVISIONED"
+
+  read_capacity  = 5
+  write_capacity = 5
+
+  hash_key = "username"
+
+  attributes = [
+    {
+      name = "username"
+      type = "S"
+    }
+  ]
+
+}
