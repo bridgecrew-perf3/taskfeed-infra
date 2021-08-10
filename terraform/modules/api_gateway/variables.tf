@@ -1,9 +1,9 @@
-variable "api_name" {
+variable "name" {
   type        = string
   description = "Name of the API."
 }
 
-variable "api_description" {
+variable "description" {
   type        = string
   description = "Description of the API."
 }
@@ -14,7 +14,7 @@ variable "api_key_source" {
   description = "Source of the API key for requests."
 }
 
-variable "api_openapi_spec" {
+variable "openapi_spec" {
   type        = string
   description = "Path to the OpenAPI specification file."
 }
@@ -25,13 +25,13 @@ variable "api_endpoint_config_type" {
   description = "API Gateway endpoint."
 }
 
-variable "api_tags" {
+variable "tags" {
   default     = {}
   type        = map(string)
   description = "Tags for the API."
 }
 
-variable "api_stage" {
+variable "stage" {
   type        = string
   description = "Stage to deploy API in."
 }
