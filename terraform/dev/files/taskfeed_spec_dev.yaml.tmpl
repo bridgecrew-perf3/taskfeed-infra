@@ -13,23 +13,9 @@ paths:
         Retrieves all tasks stored in the backend. This operation will be costly 
         and therefore limited to developer/admin access only.
       x-amazon-apigateway-integration:
-        httpMethod: "GET"
-        type: "MOCK"
-        ## Required to test MOCK integration
-        requestTemplates:
-          "application/json": |
-            {
-                "statusCode": 200
-            }
-        responses:
-          "200":
-            statusCode: "200"
-            responseTemplates:
-              "application/json": |
-                {
-                    "statusCode": 200,
-                    "message": "Success!"
-                }
+        httpMethod: "ANY"
+        type: "aws_proxy"
+        uri: "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
       x-amazon-apigateway-auth:
         type: "NONE"
       responses:

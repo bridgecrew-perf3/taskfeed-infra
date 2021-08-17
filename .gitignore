@@ -1,2 +1,5 @@
+# Terraforom local state files
 .terraform
-docker
+
+# Local lambda builds
+builds
