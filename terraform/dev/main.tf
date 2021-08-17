@@ -2,9 +2,6 @@
 provider "aws" {
   region = "us-east-2"
 
-  endpoints {
-    dynamodb = "http://localhost:8000"
-  }
 }
 
 terraform {
@@ -22,15 +19,56 @@ terraform {
   }
 }
 
+locals {
+  region      = "us-east-2"
+  environment = "Dev"
+}
+
 module "api_gateway" {
   source = "../modules/api_gateway"
 
-  name                     = "taskfeed-rest-api"
-  description              = "REST API for TaskFeed app."
-  api_key_source           = "HEADER"
-  openapi_spec             = "./files/taskfeed_spec_dev.yaml"
+  name           = "taskfeed-rest-api"
+  description    = "REST API for TaskFeed app."
+  api_key_source = "HEADER"
+  openapi_spec = templatefile("./files/taskfeed_spec_dev.yaml.tmpl", {
+    region     = local.region
+    lambda_arn = module.lambda_func.lambda_function_arn
+  })
   api_endpoint_config_type = "REGIONAL"
-  stage                    = "DEV"
+  stage                    = local.environment
+
+  tags = {
+    "Environment" = local.environment
+    "Terraform"   = "true"
+  }
+}
+
+module "lambda_func" {
+  source = "terraform-aws-modules/lambda/aws"
+
+  function_name = "test_func"
+  description   = "Test lambda function"
+  handler       = "lambda_function.lambda_handler"
+  runtime       = "python3.8"
+
+  create_package = false
+  s3_existing_package = {
+    bucket = "taskfeed-backend"
+    key    = "lambda_function.zip"
+  }
+
+  allowed_triggers = {
+    "allow_APIGateway" = {
+      service    = "apigateway"
+      source_arn = "${module.api_gateway.api_gateway_execution_arn}*/GET/tasks"
+    }
+  }
+
+  publish = true
+  tags = {
+    "Environment" = local.environment
+    "Terraform"   = "true"
+  }
 }
 
 module "dynamodb_table_tasks" {
@@ -56,6 +94,11 @@ module "dynamodb_table_tasks" {
     }
   ]
 
+  tags = {
+    "Environment" = local.environment
+    "Terraform"   = "true"
+  }
+
 }
 
 module "dynamodb_table_users" {
@@ -75,5 +118,10 @@ module "dynamodb_table_users" {
       type = "S"
     }
   ]
+
+  tags = {
+    "Environment" = local.environment
+    "Terraform"   = "true"
+  }
 
 }
