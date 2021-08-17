@@ -3,7 +3,7 @@ resource "aws_api_gateway_rest_api" "this" {
   description    = var.description
   api_key_source = var.api_key_source
 
-  body = file(var.openapi_spec)
+  body = var.openapi_spec
   endpoint_configuration {
     types = [var.api_endpoint_config_type]
   }
@@ -16,7 +16,10 @@ resource "aws_api_gateway_deployment" "this" {
   rest_api_id = aws_api_gateway_rest_api.this.id
 
   triggers = {
-    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.this.id))
+    # Should redeploy everytime something changes(?)
+    redeployment = sha1(jsonencode([
+      aws_api_gateway_rest_api.this
+    ]))
   }
 
   lifecycle {
