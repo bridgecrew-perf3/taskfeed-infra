@@ -16,7 +16,7 @@ variable "api_key_source" {
 
 variable "openapi_spec" {
   type        = string
-  description = "Path to the OpenAPI specification file."
+  description = "OpenAPI specification"
 }
 
 variable "api_endpoint_config_type" {
