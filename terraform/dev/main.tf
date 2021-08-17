@@ -51,7 +51,11 @@ module "lambda_func" {
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.8"
 
-  source_path = "../../../taskfeed-backend/lambda_function.py"
+  create_package = false
+  s3_existing_package = {
+    bucket = "taskfeed-backend"
+    key    = "lambda_function.zip"
+  }
 
   allowed_triggers = {
     "allow_APIGateway" = {

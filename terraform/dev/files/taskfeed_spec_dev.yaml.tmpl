@@ -13,7 +13,7 @@ paths:
         Retrieves all tasks stored in the backend. This operation will be costly 
         and therefore limited to developer/admin access only.
       x-amazon-apigateway-integration:
-        httpMethod: "ANY"
+        httpMethod: "POST"
         type: "aws_proxy"
         uri: "arn:aws:apigateway:${region}:lambda:path/2015-03-31/functions/${lambda_arn}/invocations"
       x-amazon-apigateway-auth:
