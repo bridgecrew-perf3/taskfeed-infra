@@ -125,4 +125,3 @@ Once you've installed the cli, you need to configure aws using your account cred
 ```bash
 aws configure
 ```
-
