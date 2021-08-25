@@ -19,6 +19,9 @@ terraform {
 }
 
 locals {
+  dynamodb_table  = "tasks"
+  dynamodb_region = "us-east-2"
+
   environment  = "Dev"
   organization = "TaskFeed"
 }
@@ -44,6 +47,12 @@ module "lambda_func" {
   policies = [
     data.aws_iam_policy.dynamodb_read_only.arn
   ]
+
+  # Env vars to point lambda func to dynamodb
+  environment_variables = {
+    "TABLE"  = local.dynamodb_table
+    "REGION" = local.dynamodb_region
+  }
 
   tags = {
     "Organization" = local.organization
