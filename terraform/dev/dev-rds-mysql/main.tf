@@ -59,7 +59,7 @@ module "rds-mysql" {
   port                = 3306
   publicly_accessible = true #DEV ONLY
 
-  multi_az   = true
+  multi_az   = false
   subnet_ids = data.aws_subnet_ids.default_vpc_subnet.ids
   ## Not so important for dev but we should be deploying to our own vpc
   #subnet_ids             = module.vpc.database_subnets
